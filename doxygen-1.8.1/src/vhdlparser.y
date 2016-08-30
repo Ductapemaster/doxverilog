@@ -375,7 +375,7 @@ physical_literal_1   : /* empty */        { $$=""; }
 physical_literal_no_default : t_AbstractLit t_Identifier   { $$=$1+" "+$2; }
 
 idf_list : t_Identifier { $$=$1; }
-         | idf_list t_Comma t_Identifier { $$=$1+","+$3}
+         | idf_list t_Comma t_Identifier { $$=$1+","+$3; }
          ;
 
 /*------------------------------------------
@@ -463,7 +463,7 @@ entity_decl_2 : /* empty */  { $$=""; }
               | t_PORT { currP=VhdlDocGen::PORT; }  interf_list t_Semicolon  { currP=0; }
               ;
 entity_decl_1 :  /* empty */  { $$=""; }
-              | t_GENERIC { currP=VhdlDocGen::GENERIC;parse_sec=GEN_SEC} interf_list t_Semicolon{ currP=0;parse_sec=0; }
+              | t_GENERIC { currP=VhdlDocGen::GENERIC;parse_sec=GEN_SEC; } interf_list t_Semicolon{ currP=0;parse_sec=0; }
               | t_GENERIC error t_Semicolon{ currP=0; }
               ;
 
@@ -1054,7 +1054,7 @@ physical_type_definition_2: secondary_unit_decl  { $$=$1+"#"; }
 
 base_unit_decl: t_Identifier t_Semicolon { $$=$1; }
 
-secondary_unit_decl: t_Identifier t_EQSym physical_literal t_Semicolon { $$=$1+"="+$3 }
+secondary_unit_decl: t_Identifier t_EQSym physical_literal t_Semicolon { $$=$1+"="+$3; }
 
 unconstrained_array_definition: t_ARRAY t_LeftParen
                                 index_subtype_definition unconstrained_array_definition_1 t_RightParen t_OF
@@ -1066,8 +1066,8 @@ unconstrained_array_definition: t_ARRAY t_LeftParen
     }
 
 unconstrained_array_definition_1: { $$=""; }
-unconstrained_array_definition_1: unconstrained_array_definition_1 unconstrained_array_definition_2 { $$=$1+"  "+$2 }
-unconstrained_array_definition_2: t_Comma index_subtype_definition { $$=", "+$2 }
+unconstrained_array_definition_1: unconstrained_array_definition_1 unconstrained_array_definition_2 { $$=$1+"  "+$2; }
+unconstrained_array_definition_2: t_Comma index_subtype_definition { $$=", "+$2; }
 
 index_subtype_definition: mark t_RANGE t_Box { $$=$1+" range<> "; }
 
